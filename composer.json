@@ -6,5 +6,7 @@
             "email": "didier.putman@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "components/jquery": "1.9.*"
+    }
 }

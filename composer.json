@@ -1,0 +1,10 @@
+{
+    "name": "admin/aristote-puzzle",
+    "authors": [
+        {
+            "name": "didierp",
+            "email": "didier.putman@gmail.com"
+        }
+    ],
+    "require": {}
+}

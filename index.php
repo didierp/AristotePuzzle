@@ -3,11 +3,9 @@
 <head>
     <title>Aristote Puzzle</title>
     <link rel="stylesheet" href="style.css" />
-    <script type="application/javascript" src="jquery-3.1.1.min.js"></script>
+    <script type="application/javascript" src="components/jquery/jquery.min.js"></script>
 </head>
 <body>
-<!---h1>Aristote Puzzle</h1 -->
-
 <table width="100%">
     <tr>
         <td width="50%">
@@ -56,7 +54,6 @@
         </td>
     </tr>
 </table>
-
 <script type="application/javascript" src="resolve.js"></script>
 </body>
 </html>

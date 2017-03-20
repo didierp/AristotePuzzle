@@ -1,0 +1,87 @@
+.content {
+	display: block;
+}
+.result {
+    font-family: "Arial", sans-serif;
+}
+.puzzle {
+	display: block;
+}
+.loaderbutton {
+	display: block;
+}
+.bouton17 {
+	/*top: 250px;*/
+	/*left: 25px;*/
+	z-index:0;
+	position: relative;
+	width:100px;
+	cursor:pointer;
+	text-transform:capitalize;
+	height:100px;
+	background:#fafafa;
+	box-shadow:2px 2px 8px #aaa;
+	font:bold 13px Arial;
+	border-radius:50%;
+	color:#555;
+}
+.loader {
+	display: none;
+	z-index:1;
+	position: absolute;
+	/*top: 225px;*/
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.hexagon,
+.hexagon:before,
+.hexagon:after {background: grey;}
+.hexagon span {background: grey; color: white;}
+
+.hexagon {
+    cursor: pointer;
+    display: flex; /* contexte sur le parent */
+    flex-direction: column; /* direction d'affichage verticale */
+    justify-content: center; /* alignement vertical */
+    width: 50px;
+    height: 28px;
+    position: relative;
+}
+.hexagon:before, .hexagon:after {
+    content: "";
+    position: absolute;
+    left: 11px;
+    width: 28px;
+    height: 28px;
+    -moz-transform: rotate(145deg) skew(22.5deg);
+    -webkit-transform: rotate(145deg) skew(22.5deg);
+    transform: rotate(145deg) skew(22.5deg);
+}
+.hexagon:before {
+    top: -14px;
+}
+.hexagon:after {
+    top: 14px;
+}
+.hexagon span {
+    margin: auto;
+    font-family: trebuchet, helvetica, sans-serif;
+    font-size: 24px;
+    position: absolute;
+    top: 50%; /* poussé de la moitié de hauteur du référent */
+    transform: translateY(-50%); /* tiré de la moitié de sa propre hauteur */
+    left: 0;
+    width: 50px;
+    height: 28px;
+    z-index: 1;
+    text-align: center;
+    vertical-align: middle;
+}

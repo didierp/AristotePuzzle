@@ -10,12 +10,7 @@ B = 228 - 2A,  or   A = 76 - d,  or  A = 114 - 1/2 B,  or  A = 57 + 1/2 C,
 C = 2A - 114,       B = 76 + 2d,     C = 114 - B,          B = 114 - C,
 d = 76 - A,         C = 38 - 2d,     d = 1/2 B - 38,       d = 19 - 1/2 C.
 
-B = b + g + p + r + m + d
-A = a + c + l + s + q + h
-C = e + f + k + o + n + i
-D = j
 */
-
 function getPuzzles($position, $min = 1, $max = 18, $sum = 38) {
 	if (in_array($position, ['a', 'c', 'l', 's', 'q', 'h'])) {
 		$position = 'a';
@@ -30,20 +25,10 @@ function getPuzzles($position, $min = 1, $max = 18, $sum = 38) {
 	$contours = [];
 	$tripletPermutation = getPermutation($position);
 	foreach($tripletPermutation as $keyi => $tripleti) {
-		$keys = [];
-		$keys[$tripleti[0]] = true;
-		$keys[$tripleti[1]] = true;
-		$keys[$tripleti[2]] = true;
-		$remain_values = getRemainValues($keys);
+		$remain_values = getRemainValues($tripleti);
 		$tripletPermutation1 = getComplement($tripleti[2], $remain_values);
 		foreach($tripletPermutation1 as $keyj => $tripletj) {
-			$keys = [];
-			$keys[$tripleti[0]] = true;
-			$keys[$tripleti[1]] = true;
-			$keys[$tripleti[2]] = true;
-			$keys[$tripletj[1]] = true;
-			$keys[$tripletj[2]] = true;
-			$remain_values = getRemainValues($keys);
+			$remain_values = getRemainValues(array_merge($tripleti, $tripletj));
 			$remainSumThree = $remain_values[0] + $remain_values[1] + $remain_values[2];
 			$remainSumFour = $remain_values[0] + $remain_values[1] + $remain_values[2] + $remain_values[3];
 			$remainSumFive = $remain_values[0] + $remain_values[1] + $remain_values[2] + $remain_values[3] + $remain_values[4];
@@ -55,19 +40,10 @@ function getPuzzles($position, $min = 1, $max = 18, $sum = 38) {
 				$remainSumFour + $tripleti[0] <= $sum &&
 				$remainSumFour + $tripleti[2] <= $sum &&
 				$remainSumFour + $tripletj[2] <= $sum &&
-				$remainSumFive - $tripleti[2] <= $sum
-			) {
+				$remainSumFive - $tripleti[2] <= $sum) {
 				$tripletPermutation2 = getComplement($tripletj[2], $remain_values);
 				foreach($tripletPermutation2 as $keyk=> $tripletk) {
-					$keys = [];
-					$keys[$tripleti[0]] = true;
-					$keys[$tripleti[1]] = true;
-					$keys[$tripleti[2]] = true;
-					$keys[$tripletj[1]] = true;
-					$keys[$tripletj[2]] = true;
-					$keys[$tripletk[1]] = true;
-					$keys[$tripletk[2]] = true;
-					$remain_values = getRemainValues($keys);
+					$remain_values = getRemainValues(array_merge($tripleti, $tripletj, $tripletk));
 					$remainSumTwo = $remain_values[0] + $remain_values[1];
 					$remainSumThree =  $remain_values[0] + $remain_values[1] + $remain_values[2];
 					$remainSumFour =  $remain_values[0] + $remain_values[1] + $remain_values[2] + $remain_values[3];
@@ -83,26 +59,14 @@ function getPuzzles($position, $min = 1, $max = 18, $sum = 38) {
 						$remainSumFour + $tripleti[2] <= $sum &&
 						$remainSumThree + $tripleti[1] <= $sum &&
 						$remainSumFour + $tripletj[2] <= $sum) {
-
 						$tripletPermutation3 = getComplement($tripletk[2], $remain_values);
 						foreach($tripletPermutation3 as $keyl=> $tripletl) {
-							$keys = [];
-							$keys[$tripleti[0]] = true;
-							$keys[$tripleti[1]] = true;
-							$keys[$tripleti[2]] = true;
-							$keys[$tripletj[1]] = true;
-							$keys[$tripletj[2]] = true;
-							$keys[$tripletk[1]] = true;
-							$keys[$tripletk[2]] = true;
-							$keys[$tripletl[1]] = true;
-							$keys[$tripletl[2]] = true;
-							$remain_values = getRemainValues($keys);
+							$remain_values = getRemainValues(array_merge($tripleti, $tripletj, $tripletk, $tripletl));
 							$remainSumTwo = $remain_values[0] + $remain_values[1];
 							$remainSumThree = $remain_values[0] + $remain_values[1] + $remain_values[2];
 							$remainSumFour = $remain_values[0] + $remain_values[1] + $remain_values[2] + $remain_values[3];
 							$remainSumFive = $remain_values[0] + $remain_values[1] + $remain_values[2] + $remain_values[3] + $remain_values[4];
-							if (
-								$remainSumFive - $tripleti[2] <= $sum &&
+							if ($remainSumFive - $tripleti[2] <= $sum &&
 								$remainSumThree <= $tripleti[1] &&
 								$remainSumThree <= $tripletj[1] &&
 								$remainSumThree <= $tripletk[1] &&
@@ -113,23 +77,10 @@ function getPuzzles($position, $min = 1, $max = 18, $sum = 38) {
 								$remainSumThree + $tripletk[1] <= $sum &&
 								$remainSumThree + $tripleti[2] + $tripletl[2] <= $sum &&
 								$remainSumThree + $tripleti[1] <= $sum &&
-								$remainSumFour + $tripletj[2] <= $sum
-							) {
+								$remainSumFour + $tripletj[2] <= $sum) {
 								$tripletPermutation4 = getComplement($tripletl[2], $remain_values);
 								foreach($tripletPermutation4 as $keym=> $tripletm) {
-									$keys = [];
-									$keys[$tripleti[0]] = true;
-									$keys[$tripleti[1]] = true;
-									$keys[$tripleti[2]] = true;
-									$keys[$tripletj[1]] = true;
-									$keys[$tripletj[2]] = true;
-									$keys[$tripletk[1]] = true;
-									$keys[$tripletk[2]] = true;
-									$keys[$tripletl[1]] = true;
-									$keys[$tripletl[2]] = true;
-									$keys[$tripletm[1]] = true;
-									$keys[$tripletm[2]] = true;
-									$remain_values = getRemainValues($keys);
+									$remain_values = getRemainValues(array_merge($tripleti, $tripletj, $tripletk, $tripletl, $tripletm));
 									$remainSumTwo = $remain_values[0] + $remain_values[1];
 									$remainSumThree =  $remain_values[0] + $remain_values[1] + $remain_values[2];
 									if ($remainSumThree <= $tripleti[1] &&
@@ -173,24 +124,9 @@ function getPuzzles($position, $min = 1, $max = 18, $sum = 38) {
 											!in_array($tripleti[0], $tripletl)&&
 											!in_array($tripletn[1], $tripletm)&&
 											!in_array($tripleti[0], $tripletm)) {
-											$keys = [];
-											$keys[$tripleti[0]] = true;
-											$keys[$tripleti[1]] = true;
-											$keys[$tripleti[2]] = true;
-											$keys[$tripletj[1]] = true;
-											$keys[$tripletj[2]] = true;
-											$keys[$tripletk[1]] = true;
-											$keys[$tripletk[2]] = true;
-											$keys[$tripletl[1]] = true;
-											$keys[$tripletl[2]] = true;
-											$keys[$tripletm[1]] = true;
-											$keys[$tripletm[2]] = true;
-											$keys[$tripletn[1]] = true;
-											$keys[$D] = true;
-											$remain_values = getRemainValues($keys);
+											$remain_values = getRemainValues(array_merge([$D], $tripleti, $tripletj, $tripletk, $tripletl, $tripletm, $tripletn));
 											$remainSumTwo = $remain_values[0] + $remain_values[1];
 											$remainSumSix =  $remain_values[0] + $remain_values[1] + $remain_values[2] + $remain_values[3] + $remain_values[4] + $remain_values[5];
-
 											if ($remainSumTwo + $D <= $tripleti[1] &&
 												$remainSumTwo + $D <= $tripletj[1] &&
 												$remainSumTwo + $D <= $tripletk[1] &&
@@ -203,8 +139,7 @@ function getPuzzles($position, $min = 1, $max = 18, $sum = 38) {
 												$D + $remainSumTwo + $tripleti[2] + $tripletl[2] <= $sum &&
 												$D + $remainSumTwo + $tripletm[2] + $tripletj[2] <= $sum &&
 												$remainSumTwo + $tripletn[1] + $tripletl[1] <= $sum &&
-												$remainSumTwo + $tripletj[1] + $tripletn[1] <= $sum
-											) {
+												$remainSumTwo + $tripletj[1] + $tripletn[1] <= $sum) {
 												$combinaison = new stdClass();
 												$combinaison->a = $tripleti[0];
 												$combinaison->b = $tripleti[1];
@@ -265,10 +200,9 @@ function getPuzzles($position, $min = 1, $max = 18, $sum = 38) {
 	}
 	return $combinaisons;
 }
-
 function getPermutationDiagonale($sum, $remain_values) {
 	$doubletDiagonale = [];
-	foreach($remain_values as $key1 => $i) {
+	foreach($remain_values as $i) {
 		$j = $sum - $i;
 		if (in_array($j, $remain_values) &&
 			$i != $j) {
@@ -277,7 +211,6 @@ function getPermutationDiagonale($sum, $remain_values) {
 	}
 	return $doubletDiagonale;
 }
-
 function getComplement($corner, $remain_values, $sum = 38) {
 	$tripletPermutation = [];
 	foreach($remain_values as $key1 => $i) {
@@ -295,17 +228,11 @@ function getComplement($corner, $remain_values, $sum = 38) {
 	}
 	return $tripletPermutation;
 }
-
 function getRemainValues($keys, $min = 1, $max = 18){
-	$remain_values = [];
-	for($i = $min ; $i <= $max ; $i++) {
-		if (!isset($keys[$i])) {
-			$remain_values[] = $i;
-		}
-	}
-	return $remain_values;
+	$diff = array_diff(range($min, $max), $keys);
+	sort($diff);
+	return $diff;
 }
-
 function getPermutation($position, $min = 1, $max = 18, $sum = 38) {
 	$tripletPermutation = [];
 	if ($position == 'a') {
@@ -314,8 +241,7 @@ function getPermutation($position, $min = 1, $max = 18, $sum = 38) {
 		$i = 19;
 		foreach($tab1s as  $j) {
 			$k = $sum - $i - $j;
-			if (
-				$k >= $min &&
+			if ($k >= $min &&
 				$k <= $max &&
 				$i != $k &&
 				$j != $k) {
@@ -328,8 +254,7 @@ function getPermutation($position, $min = 1, $max = 18, $sum = 38) {
 		$j = 19;
 		foreach($tab1s as  $i) {
 			$k = $sum - $i - $j;
-			if (
-				$i < $k &&
+			if ($i < $k &&
 				$k >= $min &&
 				$k <= $max &&
 				$j != $k) {
@@ -356,12 +281,9 @@ function getPermutation($position, $min = 1, $max = 18, $sum = 38) {
 	}
 	return $tripletPermutation;
 }
-
-
 $timestamp_debut = microtime(true);
 $combinaisons = getPuzzles($_REQUEST['position']);
 $timestamp_fin = microtime(true);
 $difference_ms = $timestamp_fin - $timestamp_debut;
-
 header('Content-Type: application/json');
 echo json_encode(['ms' => $difference_ms, 'count' => count($combinaisons), 'combinaisons' => $combinaisons]);

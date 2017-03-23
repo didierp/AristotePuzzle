@@ -4,69 +4,29 @@ $(document).ready(function(){
 	});
 });
 
-var first_left = 100;
-var pas_left = 51;
-var first_top = 100;
 var pas_top = -28;
-$('.hexagon.a').css({left: first_left + 'px', top: first_top + 'px'});
-var pos_left = first_left + pas_left;
-var pos_top = first_top + pas_top;
-$('.hexagon.b').css({left: pos_left + 'px', top: pos_top + 'px'});
-pos_left = pos_left + pas_left;
-pos_top = pos_top + pas_top;
-$('.hexagon.c').css({left: pos_left +'px', top: pos_top + 'px'});
-
-first_left = 75;
-first_top = 60;
-$('.hexagon.d').css({left: first_left + 'px', top: first_top + 'px'});
-pos_left = first_left + pas_left;
-pos_top = first_top + pas_top;
-$('.hexagon.e').css({left: pos_left + 'px', top: pos_top + 'px'});
-pos_left = pos_left + pas_left;
-pos_top = pos_top + pas_top;
-$('.hexagon.f').css({left: pos_left + 'px', top: pos_top + 'px'});
-pos_left = pos_left + pas_left;
-pos_top = pos_top + pas_top;
-$('.hexagon.g').css({left: pos_left + 'px', top: pos_top + 'px'});
-
-first_left = 50;
-first_top = -8;
-$('.hexagon.h').css({left: first_left + 'px', top: first_top + 'px'});
-pos_left = first_left + pas_left;
-pos_top = first_top + pas_top;
-$('.hexagon.i').css({left: pos_left + 'px', top: pos_top + 'px'});
-pos_left = pos_left + pas_left;
-pos_top = pos_top + pas_top;
-$('.hexagon.j').css({left: pos_left + 'px', top: pos_top + 'px'});
-pos_left = pos_left + pas_left;
-pos_top = pos_top + pas_top;
-$('.hexagon.k').css({left: pos_left + 'px', top: pos_top + 'px'});
-pos_left = pos_left + pas_left;
-pos_top = pos_top + pas_top;
-$('.hexagon.l').css({left: pos_left + 'px', top: pos_top + 'px'});
-
-first_left = 77;
-first_top = -104;
-$('.hexagon.m').css({left: first_left + 'px', top: first_top + 'px'});
-pos_left = first_left + pas_left;
-pos_top = first_top + pas_top;
-$('.hexagon.n').css({left: pos_left + 'px', top: pos_top + 'px'});
-pos_left = pos_left + pas_left;
-pos_top = pos_top + pas_top;
-$('.hexagon.o').css({left: pos_left + 'px', top: pos_top + 'px'});
-pos_left = pos_left + pas_left;
-pos_top = pos_top + pas_top;
-$('.hexagon.p').css({left: pos_left + 'px', top: pos_top + 'px'});
-
-first_left = 104;
-first_top = -172;
-$('.hexagon.q').css({left: first_left + 'px', top: first_top + 'px'});
-pos_left = first_left + pas_left;
-pos_top = first_top + pas_top;
-$('.hexagon.r').css({left: pos_left + 'px', top: pos_top + 'px'});
-pos_left = pos_left + pas_left;
-pos_top = pos_top + pas_top;
-$('.hexagon.s').css({left: pos_left + 'px', top: pos_top + 'px'});
+var pas_left = 51;
+var pos_top = 100;
+var pos_left = 100;
+for(var i = 1 ; i < 20 ; i++){
+	var char_code = i + 96;
+	if (char_code == 100 ) { //d
+		pos_left = 75;
+		pos_top = 60;
+	} else if (char_code == 104) { //h
+		pos_left = 50;
+		pos_top = -8;
+	} else if (char_code == 109) { //m
+		pos_left = 77;
+		pos_top = -104;
+	} else if (char_code == 113) { //q
+		pos_left = 104;
+		pos_top = -172;
+	}
+	$('.hexagon.' + String.fromCharCode(char_code)).css({left: pos_left + 'px', top: pos_top + 'px'});
+	pos_left = pos_left + pas_left;
+	pos_top = pos_top + pas_top;
+}
 
 function compute(position){
 	$('div.search').show();
@@ -136,11 +96,11 @@ function printPuzzle(combinaison, position) {
 		$('#s_index').text(combinaison.s);
 	} else if (position == 'g') {
 		/*
-		     a + b + c         = 38
-		   d + e + f + g     = 38
+		 a + b + c         = 38
+		 d + e + f + g     = 38
 		 h + i + j + k + l = 38
-		   m + n + o + p     = 38
-		     q + r + s         = 38
+		 m + n + o + p     = 38
+		 q + r + s         = 38
 		 */
 		$('#c_index').text(combinaison.a);
 		$('#g_index').text(combinaison.b);
@@ -244,11 +204,11 @@ function printPuzzle(combinaison, position) {
 		$('#c_index').text(combinaison.s);
 	} else if (position == 'd') {
 		/*
-		     a + b + c         = 38
-		   d + e + f + g     = 38
+		 a + b + c         = 38
+		 d + e + f + g     = 38
 		 h + i + j + k + l = 38
-		   m + n + o + p     = 38
-		     q + r + s         = 38
+		 m + n + o + p     = 38
+		 q + r + s         = 38
 		 */
 		$('#h_index').text(combinaison.a);
 		$('#d_index').text(combinaison.b);

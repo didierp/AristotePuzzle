@@ -213,16 +213,16 @@ class AristotePuzzle {
 	}
 	protected function getComplement($corner, $remain_values) {
 		$tripletPermutation = [];
-		foreach($remain_values as $key1 => $i) {
-			$tab2s = $remain_values;
-			unset($tab2s[$key1]);
-			foreach($tab2s as $key2 => $j) {
-				if ($corner + $i + $j > $this->sum) {
-					break;
-				} else if ($corner + $i + $j == $this->sum &&
-					$i != $corner &&
-					$j != $corner) {
+		$count = count($remain_values);
+		if ($remain_values[0] + $remain_values[1] + $corner <= $this->sum &&
+			$remain_values[$count-1] + $remain_values[$count-2] + $corner >= $this->sum) {
+			foreach($remain_values as $i) {
+				$j = $this->sum - $corner - $i;
+				if ($i < $j &&
+					$j != $corner &&
+					in_array($j, $remain_values)) {
 					$tripletPermutation[] = [$corner, $i, $j];
+					$tripletPermutation[] = [$corner, $j, $i];
 				}
 			}
 		}

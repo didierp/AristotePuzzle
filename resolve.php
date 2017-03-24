@@ -220,6 +220,8 @@ class AristotePuzzle {
 				$j = $this->sum - $corner - $i;
 				if ($i < $j &&
 					$j != $corner &&
+					$j <= $this->max &&
+					$j >= $this->min &&
 					in_array($j, $remain_values)) {
 					$tripletPermutation[] = [$corner, $i, $j];
 					$tripletPermutation[] = [$corner, $j, $i];
@@ -269,11 +271,13 @@ class AristotePuzzle {
 				unset($tab2s[$key1]);
 				foreach($tab2s as  $j) {
 					$k = $this->sum - $i - $j;
-					if ($k <= $this->max &&
+					if ($j < $k &&
+						$k <= $this->max &&
 						$k >= $this->min &&
 						$j != $k &&
 						$i != $k) {
 						$tripletPermutation[] = [$i, $j, $k];
+						$tripletPermutation[] = [$i, $k, $j];
 					}
 				}
 			}

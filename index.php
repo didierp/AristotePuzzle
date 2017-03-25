@@ -13,6 +13,8 @@
             </div>
         </td>
         <td width="50%">
+<input type="number" name="pos_top_h" value="-30" /><br/>
+<input type="number" name="pos_left_h" value="-30" /><br/>
             <div class="result">
                 <div class="search" style="display: none;"><span>Recherche en cours...</span></div>
                 <div class="count" style="display: none;"><span>Nombre de solution trouv&eacute;e : </span><span id="count"></span></div>

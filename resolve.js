@@ -2,44 +2,56 @@ $(document).ready(function(){
 	$('span.index_puzzle').bind('click', function(event){
 		spanClick(event, $(event.target).attr('id'));
 	});
+	$('input[type="number"]').bind('change', function(event){
+		printHexagone(-28, 51,
+				108, 48,
+				68, 24,
+				+$('input[name="pos_top_h"]').val(), +$('input[name="pos_left_h"]').val(),
+				-96, 27,
+				-164, 54
+				);
+	});
 });
-
-var pas_top = -28;
-var pas_left = 51;
-var pos_top = 100;
-var pos_left = 100;
-var line = 0;
-for(var i = 1 ; i < 20 ; i++){
-	var char_code = i + 96;
-	var code = String.fromCharCode(char_code);
-	var hexa_html = '<div class="hexagon ' + code + '"><span class="index_puzzle" id="' + code + '">??</span></div>';
-	if (char_code == 97 ) { //a
-		$('div.puzzle').append('<div id="line' + (++line).toString() +'"></div>');
-		pos_left = 100;
-		pos_top = 100;
-	} else if (char_code == 100 ) { //d
-		$('div.puzzle').append('<div id="line' + (++line).toString() +'"></div>');
-		pos_left = 75;
-		pos_top = 60;
-	} else if (char_code == 104) { //h
-		$('div.puzzle').append('<div id="line' + (++line).toString() +'"></div>');
-		pos_left = 50;
-		pos_top = -8;
-	} else if (char_code == 109) { //m
-		$('div.puzzle').append('<div id="line' + (++line).toString() +'"></div>');
-		pos_left = 77;
-		pos_top = -104;
-	} else if (char_code == 113) { //q
-		$('div.puzzle').append('<div id="line' + (++line).toString() +'"></div>');
-		pos_left = 104;
-		pos_top = -172;
+function printHexagone(
+pas_top = -28, pas_left = 51, 
+pos_top_a = 108 , pos_left_a = 48,
+pos_top_d = 68  , pos_left_d = 24, 
+pos_top_h = -30   , pos_left_h = -30, 
+pos_top_m = -96 , pos_left_m = 27, 
+pos_top_q = -164, pos_left_q = 54) {
+	$('div.puzzle').html('');
+	var line = 0;
+	for(var i = 1 ; i < 20 ; i++){
+		var char_code = i + 96;
+		var code = String.fromCharCode(char_code);
+		var hexa_html = '<div class="hexagon ' + code + '"><span class="index_puzzle" id="' + code + '">??</span></div>';
+		if (char_code == 97 ) { //a
+			$('div.puzzle').append('<div id="line' + (++line).toString() +'"></div>');
+			pos_left = pos_left_h + pos_left_a;
+			pos_top = pos_top_h + pos_top_a;
+		} else if (char_code == 100 ) { //d
+			$('div.puzzle').append('<div id="line' + (++line).toString() +'"></div>');
+			pos_left = pos_left_h + pos_left_d;
+			pos_top = pos_top_h + pos_top_d;
+		} else if (char_code == 104) { //h
+			$('div.puzzle').append('<div id="line' + (++line).toString() +'"></div>');
+			pos_left = pos_left_h;
+			pos_top = pos_top_h;
+		} else if (char_code == 109) { //m
+			$('div.puzzle').append('<div id="line' + (++line).toString() +'"></div>');
+			pos_left = pos_left_h + pos_left_m;
+			pos_top = pos_top_h + pos_top_m;
+		} else if (char_code == 113) { //q
+			$('div.puzzle').append('<div id="line' + (++line).toString() +'"></div>');
+			pos_left = pos_left_h + pos_left_q;
+			pos_top = pos_top_h + pos_top_q;
+		}
+		pos_left += pas_left;
+		pos_top += pas_top;
+		$('div#line' + line.toString()).append(hexa_html);
+		$('.hexagon.' + code).css({left: pos_left + 'px', top: pos_top + 'px'});
 	}
-	$('div#line' + line.toString()).append(hexa_html);
-	$('.hexagon.' + code).css({left: pos_left + 'px', top: pos_top + 'px'});
-	pos_left += pas_left;
-	pos_top += pas_top;
 }
-
 function compute(position){
 	$('div.search').show();
 	$('div.consigne').hide();
@@ -243,3 +255,4 @@ function printPuzzle(combinaison, position) {
 		$('#l').text(combinaison.s);
 	}
 }
+printHexagone();

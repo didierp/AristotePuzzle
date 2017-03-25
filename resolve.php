@@ -11,19 +11,20 @@ class AristotePuzzle {
 	protected $max = 18;
 	protected $valeur = 19;
 	protected $sum = 38;
+	protected $position;
 	public function getPuzzles($position) {
 		if (in_array($position, ['a', 'c', 'l', 's', 'q', 'h'])) {
-			$position = 'a';
+			$this->position = 'a';
 		} else if (in_array($position, ['b', 'g', 'p', 'r', 'm', 'd'])) {
-			$position = 'b';
+			$this->position = 'b';
 		} else if (in_array($position, ['e', 'f', 'k', 'o', 'n', 'i'])) {
-			$position = 'e';
+			$this->position = 'e';
 		} else if ($position == 'j') {
-			$position = 'j';
+			$this->position = 'j';
 		}
 		$combinaisons = [];
 		$contours = [];
-		$tripletPermutation = $this->getPermutation($position);
+		$tripletPermutation = $this->getPermutation();
 		foreach($tripletPermutation as $tripleti) {
 			$remain_values = $this->getRemainValues($tripleti);
 			$tripletPermutation1 = $this->getComplement($tripleti[2], $remain_values);
@@ -235,9 +236,9 @@ class AristotePuzzle {
 		sort($diff);
 		return $diff;
 	}
-	protected function getPermutation($position) {
+	protected function getPermutation() {
 		$tripletPermutation = [];
-		if ($position == 'a') {
+		if ($this->position == 'a') {
 			$tripletPermutation = [];
 			$tab1s = range($this->min, $this->max);
 			$i = $this->valeur;
@@ -250,7 +251,7 @@ class AristotePuzzle {
 					$tripletPermutation[] = [$i, $j, $k];
 				}
 			}
-		} else if ($position == 'b') {
+		} else if ($this->position == 'b') {
 			$tripletPermutation = [];
 			$tab1s = range($this->min, $this->max);
 			$j = $this->valeur;
@@ -263,7 +264,7 @@ class AristotePuzzle {
 					$tripletPermutation[] = [$i, $j, $k];
 				}
 			}
-		} else if ($position == 'e') {
+		} else if ($this->position == 'e') {
 			$tripletPermutation = [];
 			$tab1s = range($this->min, $this->max);
 			foreach($tab1s as $key1 => $i) {
@@ -281,7 +282,7 @@ class AristotePuzzle {
 					}
 				}
 			}
-		} else if ($position == 'j') {
+		} else if ($this->position == 'j') {
 		}
 		return $tripletPermutation;
 	}

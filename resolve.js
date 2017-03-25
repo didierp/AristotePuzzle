@@ -23,15 +23,15 @@ for(var i = 1 ; i < 20 ; i++){
 		pos_top = 60;
 	} else if (char_code == 104) { //h
 		$('div.puzzle').append('<div id="line' + (++line).toString() +'"></div>');
-		pos_left = 50;
+		pos_left = 51;
 		pos_top = -8;
 	} else if (char_code == 109) { //m
 		$('div.puzzle').append('<div id="line' + (++line).toString() +'"></div>');
-		pos_left = 77;
+		pos_left = 78;
 		pos_top = -104;
 	} else if (char_code == 113) { //q
 		$('div.puzzle').append('<div id="line' + (++line).toString() +'"></div>');
-		pos_left = 104;
+		pos_left = 105;
 		pos_top = -172;
 	}
 	$('div#line' + line.toString()).append(hexa_html);

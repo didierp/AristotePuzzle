@@ -14,7 +14,6 @@ class AristotePuzzle {
 	protected $sum = 38;
 	protected $position;
 	public function getPuzzles($position) {
-					////file_put_contents('resolve.log', "\n");
 		if (in_array($position, ['a', 'c', 'l', 's', 'q', 'h'])) {
 			$this->position = 'a';
 		} else if (in_array($position, ['b', 'g', 'p', 'r', 'm', 'd'])) {

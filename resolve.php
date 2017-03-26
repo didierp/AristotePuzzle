@@ -7,12 +7,14 @@
 	 q + r + s         = 38
 */
 class AristotePuzzle {
+
 	protected $min = 1;
 	protected $max = 18;
 	protected $valeur = 19;
 	protected $sum = 38;
 	protected $position;
 	public function getPuzzles($position) {
+					////file_put_contents('resolve.log', "\n");
 		if (in_array($position, ['a', 'c', 'l', 's', 'q', 'h'])) {
 			$this->position = 'a';
 		} else if (in_array($position, ['b', 'g', 'p', 'r', 'm', 'd'])) {
@@ -34,14 +36,7 @@ class AristotePuzzle {
 				$remainSumFour = $remain_values[0] + $remain_values[1] + $remain_values[2] + $remain_values[3];
 				$remainSumFive = $remain_values[0] + $remain_values[1] + $remain_values[2] + $remain_values[3] + $remain_values[4];
 				if ($remainSumThree <= $tripleti[1] &&
-					$remainSumThree <= $tripletj[1] &&
-					$remainSumThree + $tripleti[1] <= $this->sum &&
-					$remainSumThree + $tripletj[1] <= $this->sum &&
-					$remainSumThree + $tripleti[1] <= $this->sum &&
-					$remainSumFour + $tripleti[0] <= $this->sum &&
-					$remainSumFour + $tripleti[2] <= $this->sum &&
-					$remainSumFour + $tripletj[2] <= $this->sum &&
-					$remainSumFive - $tripleti[2] <= $this->sum) {
+					$remainSumThree <= $tripletj[1] ) {
 					$tripletPermutation2 = $this->getComplement($tripletj[2], $remain_values);
 					foreach($tripletPermutation2 as $tripletk) {
 						$remain_values = $this->getRemainValues(array_merge($tripleti, $tripletj, $tripletk));
@@ -49,17 +44,11 @@ class AristotePuzzle {
 						$remainSumThree = $remain_values[0] + $remain_values[1] + $remain_values[2];
 						$remainSumFour = $remain_values[0] + $remain_values[1] + $remain_values[2] + $remain_values[3];
 						$remainSumFive = $remain_values[0] + $remain_values[1] + $remain_values[2] + $remain_values[3] + $remain_values[4];
-						if ($remainSumFive - $tripleti[2] <= $this->sum &&
-							$remainSumThree <= $tripleti[1] &&
+						if ($remainSumThree <= $tripleti[1] &&
 							$remainSumThree <= $tripletj[1] &&
 							$remainSumThree <= $tripletk[1] &&
 							$remainSumTwo + $tripleti[1] + $tripletk[1] <= $this->sum &&
-							$remainSumThree + $tripleti[0] + $tripletk[2] <= $this->sum &&
-							$remainSumThree + $tripletj[1] <= $this->sum &&
-							$remainSumThree + $tripletk[1] <= $this->sum &&
-							$remainSumFour + $tripleti[2] <= $this->sum &&
-							$remainSumThree + $tripleti[1] <= $this->sum &&
-							$remainSumFour + $tripletj[2] <= $this->sum) {
+							$remainSumThree + $tripleti[0] + $tripletk[2] <= $this->sum) {
 							$tripletPermutation3 = $this->getComplement($tripletk[2], $remain_values);
 							foreach($tripletPermutation3 as $tripletl) {
 								$remain_values = $this->getRemainValues(array_merge($tripleti, $tripletj, $tripletk, $tripletl));
@@ -67,18 +56,11 @@ class AristotePuzzle {
 								$remainSumThree = $remain_values[0] + $remain_values[1] + $remain_values[2];
 								$remainSumFour = $remain_values[0] + $remain_values[1] + $remain_values[2] + $remain_values[3];
 								$remainSumFive = $remain_values[0] + $remain_values[1] + $remain_values[2] + $remain_values[3] + $remain_values[4];
-								if ($remainSumFive - $tripleti[2] <= $this->sum &&
-									$remainSumThree <= $tripleti[1] &&
-									$remainSumThree <= $tripletj[1] &&
+								if ($remainSumThree <= $tripletj[1] &&
 									$remainSumThree <= $tripletk[1] &&
 									$remainSumThree <= $tripletl[1] &&
-									$remainSumTwo + $tripleti[1] + $tripletk[1] <= $this->sum &&
 									$remainSumThree + $tripleti[0] + $tripletk[2] <= $this->sum &&
-									$remainSumTwo + $tripletj[1] + $tripletl[1] <= $this->sum &&
-									$remainSumThree + $tripletk[1] <= $this->sum &&
-									$remainSumThree + $tripleti[2] + $tripletl[2] <= $this->sum &&
-									$remainSumThree + $tripleti[1] <= $this->sum &&
-									$remainSumFour + $tripletj[2] <= $this->sum) {
+									$remainSumThree + $tripleti[2] + $tripletl[2] <= $this->sum ) {
 									$tripletPermutation4 = $this->getComplement($tripletl[2], $remain_values);
 									foreach($tripletPermutation4 as $tripletm) {
 										$remain_values = $this->getRemainValues(array_merge($tripleti, $tripletj, $tripletk, $tripletl, $tripletm));
@@ -86,20 +68,12 @@ class AristotePuzzle {
 										$remainSumThree = $remain_values[0] + $remain_values[1] + $remain_values[2];
 										if ($remainSumThree <= $tripleti[1] &&
 											$remainSumThree <= $tripletj[1] &&
-											$remainSumThree <= $tripletk[1] &&
 											$remainSumThree <= $tripletl[1] &&
 											$remainSumThree <= $tripletm[1] &&
-											$remainSumTwo + $tripletk[1] + $tripletl[1] + $tripletk[2] - $tripleti[2] <= $this->sum &&
-											$remainSumTwo + $tripletk[1] + $tripletl[1] + $tripletk[2] - $tripletm[2] <= $this->sum &&
-											$remainSumTwo + $tripleti[1] + $tripletk[1] <= $this->sum &&
 											$remainSumThree + $tripleti[0] + $tripletk[2] <= $this->sum &&
-											$remainSumTwo + $tripletj[1] + $tripletl[1] <= $this->sum &&
-											$remainSumTwo + $tripletm[1] + $tripletk[1] <= $this->sum &&
 											$remainSumThree + $tripleti[2] + $tripletl[2] <= $this->sum &&
 											$remainSumTwo + $tripletm[1] + $tripleti[1] <= $this->sum &&
-											$remainSumThree + $tripletm[2] + $tripletj[2] <= $this->sum &&
-											$remainSumThree + $tripletl[1] <= $this->sum &&
-											$remainSumThree + $tripletj[1] <= $this->sum) {
+											$remainSumThree + $tripletm[2] + $tripletj[2] <= $this->sum ) {
 											$A = $tripleti[0] + $tripleti[2] + $tripletj[2] + $tripletk[2] + $tripletl[2] + $tripletm[2];
 											$D = 2 * $this->sum - $A;
 											$C = 2 * $A - 114;
@@ -107,40 +81,18 @@ class AristotePuzzle {
 											$tripletn[1] = ( 228 - 2 * $A ) - ( $tripleti[1] + $tripletj[1] + $tripletk[1] + $tripletl[1] + $tripletm[1]);
 											if ($this->min <= $D &&
 												$D <= 8 &&
-												67 < $A &&
-												$A < 2 * $this->sum &&
 												$tripletn[1] <= $this->max &&
-												$tripletn[1] >= $this->min &&
-												$tripletn[0] + $tripletn[1] + $tripleti[0] == $this->sum &&
-												!in_array($tripletn[0], $tripleti)&&
-												!in_array($tripletn[1], $tripleti)&&
-												!in_array($tripletn[0], $tripletj)&&
-												!in_array($tripletn[1], $tripletj)&&
-												!in_array($tripleti[0], $tripletj)&&
-												!in_array($tripletn[0], $tripletk)&&
-												!in_array($tripletn[1], $tripletk)&&
-												!in_array($tripleti[0], $tripletk)&&
-												!in_array($tripletn[0], $tripletl)&&
-												!in_array($tripletn[1], $tripletl)&&
-												!in_array($tripleti[0], $tripletl)&&
-												!in_array($tripletn[1], $tripletm)&&
-												!in_array($tripleti[0], $tripletm)) {
+												!in_array($tripletn[1], $tripleti) &&
+												!in_array($tripletn[1], $tripletj) &&
+												!in_array($tripletn[1], $tripletk) &&
+												!in_array($tripletn[1], $tripletl) &&
+												!in_array($tripletn[1], $tripletm)) {
 												$remain_values = $this->getRemainValues(array_merge([$D], $tripleti, $tripletj, $tripletk, $tripletl, $tripletm, $tripletn));
 												$remainSumTwo = $remain_values[0] + $remain_values[1];
 												$remainSumSix = $remain_values[0] + $remain_values[1] + $remain_values[2] + $remain_values[3] + $remain_values[4] + $remain_values[5];
-												if ($remainSumTwo + $D <= $tripleti[1] &&
-													$remainSumTwo + $D <= $tripletj[1] &&
-													$remainSumTwo + $D <= $tripletk[1] &&
-													$remainSumTwo + $D <= $tripletl[1] &&
-													$remainSumTwo + $D <= $tripletm[1] &&
-													$remainSumTwo + $D <= $tripletn[1] &&
-													$remainSumSix == $C &&
-													$D + $remainSumTwo + $tripleti[0] + $tripletk[2] <= $this->sum &&
-													$remainSumTwo + $tripletj[1] + $tripletl[1] <= $this->sum &&
-													$D + $remainSumTwo + $tripleti[2] + $tripletl[2] <= $this->sum &&
-													$D + $remainSumTwo + $tripletm[2] + $tripletj[2] <= $this->sum &&
-													$remainSumTwo + $tripletn[1] + $tripletl[1] <= $this->sum &&
-													$remainSumTwo + $tripletj[1] + $tripletn[1] <= $this->sum) {
+												if ($remainSumTwo + $D <= $tripletn[1] &&
+													$remainSumSix == $C  &&
+													$D + $remainSumTwo + $tripletm[2] + $tripletj[2] <= $this->sum  ) {
 													$combinaison = new stdClass();
 													$combinaison->a = $tripleti[0];
 													$combinaison->b = $tripleti[1];
@@ -159,7 +111,7 @@ class AristotePuzzle {
 												}
 											}
 										}
-									}
+									}	
 								}
 							}
 						}

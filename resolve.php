@@ -24,17 +24,17 @@ class AristotePuzzle {
 		}
 		$combinaisons = [];
 		$contours = [];
-		$tripletPermutation = $this->getPermutation();
-		foreach($tripletPermutation as $tripleti) {
+		$tripletBordi = $this->getPermutation();
+		foreach($tripletBordi as $tripleti) {
 			$remain_values = $this->getRemainValues($tripleti);
-			$tripletPermutation1 = $this->getComplement($tripleti[2], $remain_values);
-			foreach($tripletPermutation1 as $tripletj) {
+			$tripletBordj = $this->getComplement($tripleti[2], $remain_values);
+			foreach($tripletBordj as $tripletj) {
 				$remain_values = $this->getRemainValues(array_merge($tripleti, $tripletj));
 				$remainSumThree = $remain_values[0] + $remain_values[1] + $remain_values[2];
 				if ($remainSumThree <= $tripleti[1] &&
 					$remainSumThree <= $tripletj[1] ) {
-					$tripletPermutation2 = $this->getComplement($tripletj[2], $remain_values);
-					foreach($tripletPermutation2 as $tripletk) {
+					$tripletBordk = $this->getComplement($tripletj[2], $remain_values);
+					foreach($tripletBordk as $tripletk) {
 						$remain_values = $this->getRemainValues(array_merge($tripleti, $tripletj, $tripletk));
 						$remainSumTwo = $remain_values[0] + $remain_values[1];
 						$remainSumThree = $remain_values[0] + $remain_values[1] + $remain_values[2];
@@ -43,8 +43,8 @@ class AristotePuzzle {
 							$remainSumThree <= $tripletk[1] &&
 							$remainSumTwo + $tripleti[1] + $tripletk[1] <= $this->sum &&
 							$remainSumThree + $tripleti[0] + $tripletk[2] <= $this->sum) {
-							$tripletPermutation3 = $this->getComplement($tripletk[2], $remain_values);
-							foreach($tripletPermutation3 as $tripletl) {
+							$tripletBordl = $this->getComplement($tripletk[2], $remain_values);
+							foreach($tripletBordl as $tripletl) {
 								$remain_values = $this->getRemainValues(array_merge($tripleti, $tripletj, $tripletk, $tripletl));
 								$remainSumThree = $remain_values[0] + $remain_values[1] + $remain_values[2];
 								if ($remainSumThree <= $tripletj[1] &&
@@ -52,8 +52,8 @@ class AristotePuzzle {
 									$remainSumThree <= $tripletl[1] &&
 									$remainSumThree + $tripleti[0] + $tripletk[2] <= $this->sum &&
 									$remainSumThree + $tripleti[2] + $tripletl[2] <= $this->sum ) {
-									$tripletPermutation4 = $this->getComplement($tripletl[2], $remain_values);
-									foreach($tripletPermutation4 as $tripletm) {
+									$tripletBordm = $this->getComplement($tripletl[2], $remain_values);
+									foreach($tripletBordm as $tripletm) {
 										$remain_values = $this->getRemainValues(array_merge($tripleti, $tripletj, $tripletk, $tripletl, $tripletm));
 										$remainSumTwo = $remain_values[0] + $remain_values[1];
 										$remainSumThree = $remain_values[0] + $remain_values[1] + $remain_values[2];
@@ -102,7 +102,7 @@ class AristotePuzzle {
 												}
 											}
 										}
-									}	
+									}
 								}
 							}
 						}
@@ -155,21 +155,19 @@ class AristotePuzzle {
 		return $doubletDiagonale;
 	}
 	protected function getComplement($corner, $remain_values) {
-		$tripletPermutation = [];
+		$tripletBord = [];
 		$count = count($remain_values);
 		if ($remain_values[$count-1] + $remain_values[$count-2] + $corner >= $this->sum) {
 			foreach($remain_values as $i) {
 				$j = $this->sum - $corner - $i;
-				if ($i < $j &&
-					$j != $corner &&
-					$j <= $this->max &&
-					in_array($j, $remain_values)) {
-					$tripletPermutation[] = [$corner, $i, $j];
-					$tripletPermutation[] = [$corner, $j, $i];
+				if (in_array($j, $remain_values) &&
+					$i < $j) {
+					$tripletBord[] = [$corner, $i, $j];
+					$tripletBord[] = [$corner, $j, $i];
 				}
 			}
 		}
-		return $tripletPermutation;
+		return $tripletBord;
 	}
 	protected function getRemainValues($keys){
 		$diff = array_diff(range($this->min, $this->max), $keys);
@@ -177,43 +175,36 @@ class AristotePuzzle {
 		return $diff;
 	}
 	protected function getPermutation() {
-		$tripletPermutation = [];
+		$tripletBord = [];
 		if ($this->position == 'a') {
-			$tripletPermutation = [];
+			$tripletBord = [];
 			$tab1s = range($this->min, $this->max);
 			$i = $this->valeur_pivot;
 			foreach($tab1s as $j) {
-				$tripletPermutation[] = [$i, $j, $this->sum - $i - $j];
+				$tripletBord[] = [$i, $j, $this->sum - $i - $j];
 			}
 		} else if ($this->position == 'b') {
-			$tripletPermutation = [];
+			$tripletBord = [];
 			$tab1s = range($this->min, $this->max);
 			$j = $this->valeur_pivot;
 			foreach($tab1s as $i) {
 				$k = $this->sum - $i - $j;
 				if ($i < $k) {
-					$tripletPermutation[] = [$i, $j, $k];
+					$tripletBord[] = [$i, $j, $k];
 				}
 			}
 		} else if ($this->position == 'e') {
-			$tripletPermutation = [];
+			$tripletBord = [];
 			$tab1s = range($this->min, $this->max);
 			foreach($tab1s as $key1 => $i) {
 				$tab2s = $tab1s;
 				unset($tab2s[$key1]);
-				foreach($tab2s as $j) {
-					$k = $this->sum - $i - $j;
-					if ($j < $k &&
-						$k <= $this->max &&
-						$i != $k) {
-						$tripletPermutation[] = [$i, $j, $k];
-						$tripletPermutation[] = [$i, $k, $j];
-					}
-				}
+				sort($tab2s);
+				$tripletBord = array_merge($tripletBord, $this->getComplement($i, $tab2s));
 			}
 		} else if ($this->position == 'j') {
 		}
-		return $tripletPermutation;
+		return $tripletBord;
 	}
 }
 $timestamp_debut = microtime(true);

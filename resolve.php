@@ -10,7 +10,7 @@ class AristotePuzzle {
 
 	protected $min = 1;
 	protected $max = 18;
-	protected $valeur = 19;
+	protected $valeur_pivot = 19;
 	protected $sum = 38;
 	protected $position;
 	public function getPuzzles($position) {
@@ -183,14 +183,14 @@ class AristotePuzzle {
 		if ($this->position == 'a') {
 			$tripletPermutation = [];
 			$tab1s = range($this->min, $this->max);
-			$i = $this->valeur;
+			$i = $this->valeur_pivot;
 			foreach($tab1s as $j) {
 				$tripletPermutation[] = [$i, $j, $this->sum - $i - $j];
 			}
 		} else if ($this->position == 'b') {
 			$tripletPermutation = [];
 			$tab1s = range($this->min, $this->max);
-			$j = $this->valeur;
+			$j = $this->valeur_pivot;
 			foreach($tab1s as $i) {
 				$k = $this->sum - $i - $j;
 				if ($i < $k) {

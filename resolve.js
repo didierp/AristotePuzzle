@@ -2,23 +2,21 @@ $(document).ready(function(){
 	$('span.index_puzzle').bind('click', function(event){
 		spanClick(event, $(event.target).attr('id'));
 	});
-	$('input[type="number"]').bind('change', function(event){
-		printHexagone(-28, 51,
-				108, 48,
-				68, 24,
-				+$('input[name="pos_top_h"]').val(), +$('input[name="pos_left_h"]').val(),
-				-96, 27,
-				-164, 54
-				);
-	});
 });
-function printHexagone(
-pas_top = -28, pas_left = 51, 
-pos_top_a = 108 , pos_left_a = 48,
-pos_top_d = 68  , pos_left_d = 24, 
-pos_top_h = -30   , pos_left_h = -30, 
-pos_top_m = -96 , pos_left_m = 27, 
-pos_top_q = -164, pos_left_q = 54) {
+printHexagone();
+function printHexagone() {
+	var pas_top = -28,
+		pas_left = 51,
+		pos_top_a = 108,
+		pos_left_a = 48,
+		pos_top_d = 68,
+		pos_left_d = 24,
+		pos_top_h = -30,
+		pos_left_h = -30,
+		pos_top_m = -96,
+		pos_left_m = 27,
+		pos_top_q = -164,
+		pos_left_q = 54;
 	$('div.puzzle').html('');
 	var line = 0;
 	for(var i = 1 ; i < 20 ; i++){
@@ -91,13 +89,6 @@ function printTime(ms) {
 	$('span#ms').text(ms);
 }
 function printPuzzle(combinaison, position) {
-	/*
-	 a + b + c         = 38
-	 d + e + f + g     = 38
-	 h + i + j + k + l = 38
-	 m + n + o + p     = 38
-	 q + r + s         = 38
-	 */
 	if (position == 'b') {
 		$('#a').text(combinaison.a);
 		$('#b').text(combinaison.b);
@@ -119,13 +110,6 @@ function printPuzzle(combinaison, position) {
 		$('#r').text(combinaison.r);
 		$('#s').text(combinaison.s);
 	} else if (position == 'g') {
-		/*
-		 a + b + c         = 38
-		 d + e + f + g     = 38
-		 h + i + j + k + l = 38
-		 m + n + o + p     = 38
-		 q + r + s         = 38
-		 */
 		$('#c').text(combinaison.a);
 		$('#g').text(combinaison.b);
 		$('#l').text(combinaison.c);
@@ -146,13 +130,6 @@ function printPuzzle(combinaison, position) {
 		$('#m').text(combinaison.r);
 		$('#q').text(combinaison.s);
 	} else if (position == 'p') {
-		/*
-		 a + b + c         = 38
-		 d + e + f + g     = 38
-		 h + i + j + k + l = 38
-		 m + n + o + p     = 38
-		 q + r + s         = 38
-		 */
 		$('#l').text(combinaison.a);
 		$('#p').text(combinaison.b);
 		$('#s').text(combinaison.c);
@@ -173,13 +150,6 @@ function printPuzzle(combinaison, position) {
 		$('#d').text(combinaison.r);
 		$('#h').text(combinaison.s);
 	} else if (position == 'r') {
-		/*
-		 a + b + c         = 38
-		 d + e + f + g     = 38
-		 h + i + j + k + l = 38
-		 m + n + o + p     = 38
-		 q + r + s         = 38
-		 */
 		$('#s').text(combinaison.a);
 		$('#r').text(combinaison.b);
 		$('#q').text(combinaison.c);
@@ -200,13 +170,6 @@ function printPuzzle(combinaison, position) {
 		$('#b').text(combinaison.r);
 		$('#a').text(combinaison.s);
 	} else if (position == 'm') {
-		/*
-		 a + b + c         = 38
-		 d + e + f + g     = 38
-		 h + i + j + k + l = 38
-		 m + n + o + p     = 38
-		 q + r + s         = 38
-		 */
 		$('#q').text(combinaison.a);
 		$('#m').text(combinaison.b);
 		$('#h').text(combinaison.c);
@@ -227,13 +190,6 @@ function printPuzzle(combinaison, position) {
 		$('#g').text(combinaison.r);
 		$('#c').text(combinaison.s);
 	} else if (position == 'd') {
-		/*
-		 a + b + c         = 38
-		 d + e + f + g     = 38
-		 h + i + j + k + l = 38
-		 m + n + o + p     = 38
-		 q + r + s         = 38
-		 */
 		$('#h').text(combinaison.a);
 		$('#d').text(combinaison.b);
 		$('#a').text(combinaison.c);
@@ -255,4 +211,3 @@ function printPuzzle(combinaison, position) {
 		$('#l').text(combinaison.s);
 	}
 }
-printHexagone();

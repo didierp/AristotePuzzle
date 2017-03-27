@@ -7,7 +7,6 @@
 	 q + r + s         = 38
 */
 class AristotePuzzle {
-
 	protected $min = 1;
 	protected $max = 18;
 	protected $valeur_pivot = 19;

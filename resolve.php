@@ -132,7 +132,6 @@ class AristotePuzzle {
 						if ($combinaison->d + $combinaison->e + $combinaison->f + $combinaison->g == $this->sum) {
 							$combinaison->i = $this->sum - $combinaison->d - $combinaison->n - $combinaison->r;
 							$combinaison->k = $this->sum - $combinaison->b - $combinaison->f - $combinaison->p;
-
 							if (in_array($combinaison->i, $remain_values) &&
 								in_array($combinaison->k, $remain_values)) {
 								$combinaisons[] = clone($combinaison);

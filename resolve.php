@@ -170,9 +170,17 @@ class AristotePuzzle {
 		return $tripletBord;
 	}
 	protected function getRemainValues($keys){
-		$diff = array_diff(range($this->min, $this->max), $keys);
-		sort($diff);
-		return $diff;
+		$values = [];
+		foreach($keys as $key) {
+			$values[$key] = true;
+		}
+		$remain_values = [];
+		foreach(range($this->min, $this->max) as $item) {
+			if (!isset($values[$item])) {
+				$remain_values[] = $item;
+			}
+		}
+		return $remain_values;
 	}
 	protected function getPermutation() {
 		$tripletBord = [];

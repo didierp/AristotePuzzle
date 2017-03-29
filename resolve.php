@@ -148,9 +148,11 @@ class AristotePuzzle {
 		foreach($remain_values as $i) {
 			$j = $sum - $i;
 			if (in_array($j, $remain_values) &&
-				$i != $j) {
+				$i < $j) {
 				$doubletDiagonale[] = [$i, $j];
+				$doubletDiagonale[] = [$j, $i];
 			}
+			if ($i > $j) { break;}
 		}
 		return $doubletDiagonale;
 	}
@@ -165,6 +167,7 @@ class AristotePuzzle {
 					$tripletBord[] = [$corner, $i, $j];
 					$tripletBord[] = [$corner, $j, $i];
 				}
+				if ($i > $j) { break;}
 			}
 		}
 		return $tripletBord;

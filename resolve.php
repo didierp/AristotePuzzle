@@ -72,6 +72,7 @@ class AristotePuzzle {
 											$tripletn[1] = ( 228 - 2 * $A ) - ( $tripleti[1] + $tripletj[1] + $tripletk[1] + $tripletl[1] + $tripletm[1]);
 											if ($this->min <= $D &&
 												$D <= 8 &&
+												$tripletn[1] >= $this->min &&
 												$tripletn[1] <= $this->max &&
 												!in_array($tripletn[1], $tripleti) &&
 												!in_array($tripletn[1], $tripletj) &&
@@ -115,26 +116,36 @@ class AristotePuzzle {
 			$remain_values = $contour[1];
 			//c + f + j + n + q = 38
 			$sumC = ($this->sum - $combinaison->c - $combinaison->q - $combinaison->j);
-			$doubletDiagonaleC = $this->getPermutationDiagonale($sumC, $remain_values);
 			//a + e + j + o + s = 38
 			$sumA = ($this->sum - $combinaison->a - $combinaison->s - $combinaison->j);
 			$doubletDiagonaleA = $this->getPermutationDiagonale($sumA, $remain_values);
-			if (count($doubletDiagonaleC) > 0 &&
-				count($doubletDiagonaleA) > 0) {
+			if (count($doubletDiagonaleA) > 0) {
 				foreach($doubletDiagonaleA as $doubletDiagonaleA_i) {
 					//a + e + j + o + s = 38
 					$combinaison->e = $doubletDiagonaleA_i[0];
 					$combinaison->o = $doubletDiagonaleA_i[1];
-					foreach($doubletDiagonaleC as $doubletDiagonaleC_j) {
-						//c + f + j + n + q = 38
-						$combinaison->f = $doubletDiagonaleC_j[0];
-						$combinaison->n = $doubletDiagonaleC_j[1];
-						if ($combinaison->d + $combinaison->e + $combinaison->f + $combinaison->g == $this->sum) {
+					$new_remain_values = $this->getRemainValues((array)$combinaison);
+					$combinaison->f = $this->sum - $combinaison->d - $combinaison->e - $combinaison->g;
+					if ($combinaison->f >= $this->min &&
+						$combinaison->f <= $this->max &&
+						in_array($combinaison->f , $new_remain_values)) {
+						$new_remain_values = $this->getRemainValues((array)$combinaison);
+						$combinaison->n = $this->sum - $combinaison->m - $combinaison->o - $combinaison->p;
+						if ($combinaison->n >= $this->min &&
+							$combinaison->n <= $this->max &&
+							in_array($combinaison->n , $new_remain_values)) {
+							$new_remain_values = $this->getRemainValues((array)$combinaison);
 							$combinaison->i = $this->sum - $combinaison->d - $combinaison->n - $combinaison->r;
-							$combinaison->k = $this->sum - $combinaison->b - $combinaison->f - $combinaison->p;
-							if (in_array($combinaison->i, $remain_values) &&
-								in_array($combinaison->k, $remain_values)) {
-								$combinaisons[] = clone($combinaison);
+							if ($combinaison->i >= $this->min &&
+								$combinaison->i <= $this->max &&
+								in_array($combinaison->i, $new_remain_values)) {
+								$new_remain_values = $this->getRemainValues((array)$combinaison);
+								$combinaison->k = $this->sum - $combinaison->b - $combinaison->f - $combinaison->p;
+								if ($combinaison->k >= $this->min &&
+									$combinaison->k <= $this->max &&
+									in_array($combinaison->k, $new_remain_values)) {
+									$combinaisons[] = clone($combinaison);
+								}
 							}
 						}
 					}
@@ -147,8 +158,10 @@ class AristotePuzzle {
 		$doubletDiagonale = [];
 		foreach($remain_values as $i) {
 			$j = $sum - $i;
-			if (in_array($j, $remain_values) &&
-				$i < $j) {
+			if ($j >= $this->min &&
+				$j <= $this->max &&
+				$i < $j &&
+				in_array($j, $remain_values)) {
 				$doubletDiagonale[] = [$i, $j];
 				$doubletDiagonale[] = [$j, $i];
 			}
@@ -159,11 +172,14 @@ class AristotePuzzle {
 	protected function getComplement($corner, $remain_values) {
 		$tripletBord = [];
 		$count = count($remain_values);
-		if ($remain_values[$count-1] + $remain_values[$count-2] + $corner >= $this->sum) {
+		if ($remain_values[$count-1] + $remain_values[$count-2] + $corner >= $this->sum &&
+			$remain_values[0] + $remain_values[1] + $corner <= $this->sum) {
 			foreach($remain_values as $i) {
 				$j = $this->sum - $corner - $i;
-				if (in_array($j, $remain_values) &&
-					$i < $j) {
+				if ($j >= $this->min &&
+					$j <= $this->max &&
+					$i < $j &&
+					in_array($j, $remain_values)) {
 					$tripletBord[] = [$corner, $i, $j];
 					$tripletBord[] = [$corner, $j, $i];
 				}
@@ -192,7 +208,14 @@ class AristotePuzzle {
 			$tab1s = range($this->min, $this->max);
 			$i = $this->valeur_pivot;
 			foreach($tab1s as $j) {
-				$tripletBord[] = [$i, $j, $this->sum - $i - $j];
+				$k = $this->sum - $i - $j;
+				if ($this->min <= $k &&
+					$this->max >= $k &&
+					$k < $i &&
+					$k != $j
+				) {
+					$tripletBord[] = [$i, $j, $k];
+				}
 			}
 		} else if ($this->position == 'b') {
 			$tripletBord = [];
@@ -200,7 +223,10 @@ class AristotePuzzle {
 			$j = $this->valeur_pivot;
 			foreach($tab1s as $i) {
 				$k = $this->sum - $i - $j;
-				if ($i < $k) {
+				if ($this->min <= $k &&
+					$this->max >= $k &&
+					$k < $j &&
+					$i < $k) {
 					$tripletBord[] = [$i, $j, $k];
 				}
 			}

@@ -111,6 +111,10 @@ class AristotePuzzle {
 				}
 			}
 		}
+		$t_max = $this->max;
+		if ($this->position = 'e') {
+			$t_max++;
+		}
 		foreach($contours as $contour) {
 			$combinaison = $contour[0];
 			$remain_values = $contour[1];
@@ -127,22 +131,22 @@ class AristotePuzzle {
 					$new_remain_values = $this->getRemainValues((array)$combinaison);
 					$combinaison->f = $this->sum - $combinaison->d - $combinaison->e - $combinaison->g;
 					if ($combinaison->f >= $this->min &&
-						$combinaison->f <= $this->max &&
+						$combinaison->f <= $t_max &&
 						in_array($combinaison->f , $new_remain_values)) {
 						$new_remain_values = $this->getRemainValues((array)$combinaison);
 						$combinaison->n = $this->sum - $combinaison->m - $combinaison->o - $combinaison->p;
 						if ($combinaison->n >= $this->min &&
-							$combinaison->n <= $this->max &&
+							$combinaison->n <= $t_max &&
 							in_array($combinaison->n , $new_remain_values)) {
 							$new_remain_values = $this->getRemainValues((array)$combinaison);
 							$combinaison->i = $this->sum - $combinaison->d - $combinaison->n - $combinaison->r;
 							if ($combinaison->i >= $this->min &&
-								$combinaison->i <= $this->max &&
+								$combinaison->i <= $t_max &&
 								in_array($combinaison->i, $new_remain_values)) {
 								$new_remain_values = $this->getRemainValues((array)$combinaison);
 								$combinaison->k = $this->sum - $combinaison->b - $combinaison->f - $combinaison->p;
 								if ($combinaison->k >= $this->min &&
-									$combinaison->k <= $this->max &&
+									$combinaison->k <= $t_max &&
 									in_array($combinaison->k, $new_remain_values)) {
 									$combinaisons[] = clone($combinaison);
 								}
@@ -232,12 +236,26 @@ class AristotePuzzle {
 			}
 		} else if ($this->position == 'e') {
 			$tripletBord = [];
-			$tab1s = range($this->min, $this->max);
-			foreach($tab1s as $key1 => $i) {
-				$tab2s = $tab1s;
-				unset($tab2s[$key1]);
-				sort($tab2s);
-				$tripletBord = array_merge($tripletBord, $this->getComplement($i, $tab2s));
+			$tab1s = range($this->min, $this->max - 2 );
+			$i = $this->valeur_pivot - 1;
+			foreach($tab1s as $j) {
+				$k = $this->sum - $i - $j;
+				if ($this->min <= $k &&
+					$this->max - 2  >= $k &&
+					$k < $i &&
+					$k != $j) {
+					$tripletBord[] = [$i, $j, $k];
+				}
+			}
+			$j = $this->valeur_pivot - 1;
+			foreach($tab1s as $i) {
+				$k = $this->sum - $i - $j;
+				if ($this->min <= $k &&
+					$this->max - 2 >= $k &&
+					$k < $j &&
+					$i < $k) {
+					$tripletBord[] = [$i, $j, $k];
+				}
 			}
 		} else if ($this->position == 'j') {
 		}
